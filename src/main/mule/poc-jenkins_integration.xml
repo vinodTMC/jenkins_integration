@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="4b82c098-7eb3-4f21-8b5a-6515d2138ef7" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="poc-jenkins_integrationFlow" doc:id="5619b992-a767-4284-9fc9-a9377aed944a" >
+		<http:listener doc:name="Listener" doc:id="6ff667d4-be33-4625-ba2c-aa9267cd2f7f" config-ref="HTTP_Listener_config" path="/jenkins_integration"/>
+		<logger level="INFO" doc:name="Logger" doc:id="623ac71c-aece-4b28-aed7-9f8af4b20faa" message="Welcome to jenkins Intergration with mulesoft"/>
+		<ee:transform doc:name="Transform Message" doc:id="f6c593d4-cbbc-4940-b571-2b939f97558e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+"Welcome to jenkins..!!!"]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
